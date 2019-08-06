@@ -1,0 +1,10 @@
+{% extends "@oidc/clients/_form.twig" %}
+
+{% set pagetitle = 'Create new OpenID Connect Client' | trans %}
+
+{% block action %}
+    <div class="ui submit primary icon labeled button">
+        <i class="plus icon"></i>
+        {% trans '{oidc:create}' %}
+    </div>
+{% endblock %}
