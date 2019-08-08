@@ -24,6 +24,8 @@ use League\OAuth2\Server\ResponseTypes\BearerTokenResponse;
 use OpenIDConnectServer\ClaimExtractor;
 use OpenIDConnectServer\Entities\ClaimSetInterface;
 use OpenIDConnectServer\Repositories\IdentityProviderInterface;
+use SimpleSAML\Logger;
+
 
 /**
  * Class IdTokenResponse.
@@ -85,6 +87,7 @@ class IdTokenResponse extends BearerTokenResponse
             ->setIssuedAt(time())
             ->setExpiration($accessToken->getExpiryDateTime()->getTimestamp())
             ->setSubject($userEntity->getIdentifier())
+            ->setNonce($this->nonce)
         ;
 
         // Need a claim factory here to reduce the number of claims by provided scope.
@@ -102,6 +105,14 @@ class IdTokenResponse extends BearerTokenResponse
             'id_token' => (string) $token,
         ];
     }
+
+    public function setNonce($nonce)
+    {
+        Logger::info( "IdTokenResponse- setNonce-Nince". var_export($nonce, true));
+        $this->nonce = $nonce;
+    }
+
+
 
     /**
      * @param ScopeEntityInterface[] $scopes
